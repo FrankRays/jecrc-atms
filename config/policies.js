@@ -21,5 +21,5 @@
  */
 
 module.exports = {
-    'GET /web/' : 'Auth'
+    '*' : 'Auth'
 };
