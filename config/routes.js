@@ -37,7 +37,8 @@ module.exports = {
         // all website routes
         "GET /": "Home.index",
         "GET /404": "Home.error_404",
-        "GET /500": "Home.error_500"
+        "GET /500": "Home.error_500",
+        "GET /login-page": "Home.login_page"
     },
     common: {
         // all routes common for both web & api

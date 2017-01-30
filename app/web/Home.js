@@ -7,5 +7,8 @@ module.exports = {
     },
     error_500: (req, res) => {
         res.status(500).render('500.hbs');
+    },
+    login_page: (req, res) => {
+        res.render('login.hbs');
     }
 };
