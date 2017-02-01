@@ -5,12 +5,10 @@
  * The controllers are in the directory:
  * 1. /app/api/
  * 2. /app/common/
- * 3. /app/web/
  *
- * There are three type of routing:
+ * There are two type of routing:
  * 1. For API
  * 2. For Website
- * 3. For Both
  *
  * The endpoint you mention will be as follows:
  *
@@ -31,17 +29,15 @@ module.exports = {
         // all api routes
         "GET /": "Home.index",
         "GET /404": "Home.error_404",
-        "GET /500": "Home.error_500"
+        "GET /500": "Home.error_500",
+        "POST /login": "Home.login"
     },
     web: {
         // all website routes
         "GET /": "Home.index",
         "GET /404": "Home.error_404",
         "GET /500": "Home.error_500",
-        "GET /login-page": "Home.login_page"
-    },
-    common: {
-        // all routes common for both web & api
-        "GET /": "Home.index"
+        "GET /login-page": "Home.login_page",
+        "GET /dashboard": "Home.dashboard"
     }
 };

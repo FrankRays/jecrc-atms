@@ -10,5 +10,8 @@ module.exports = {
     },
     login_page: (req, res) => {
         res.render('login.hbs');
+    },
+    dashboard: (req, res) => {
+        res.send("Welcome dashboard");
     }
 };

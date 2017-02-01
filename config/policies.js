@@ -3,6 +3,7 @@
  *******************************************************************************
  *
  * The policies are in the directory: /app/policies/
+ * All policies can have only one function named "index".
  *
  * There are two type of policies:
  * 1. For all endpoints

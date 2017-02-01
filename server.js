@@ -89,7 +89,6 @@ let registerEndpoints = (option) => {
 }
 registerEndpoints('api');
 registerEndpoints('web');
-registerEndpoints('common');
 
 app.get('/', function(req, res) {
     res.redirect('/web/');

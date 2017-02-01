@@ -14,8 +14,7 @@ let nonProtected = [
     "/api/",
     "/api/404",
     "/api/500",
-
-    "/common/"
+    "/api/login",
 ];
 
 module.exports = {
@@ -38,6 +37,7 @@ module.exports = {
                 } else {
                     // if everything is good, save to request for use in other routes
                     req.jwtDecoded = jwtDecoded;
+                    console.log(jwtDecoded);
                     next();
                 }
             });
@@ -48,7 +48,7 @@ module.exports = {
             // return an error
             return res.status(403).send({
                 success: false,
-                message: 'No token provided.'
+                data: 'No token provided.'
             });
 
         }
