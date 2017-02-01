@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Auth.js
+ *******************************************************************************
+ *
+ * A middleware to check whether data sent from client is not modified and user
+ * is authorized or not.
+ *
+ * This policy apply to all endpoints for exceptions, add the url to
+ * "nonProtected" array object.
+ *
+ */
+
 "use strict";
 
 const jwt = require('jsonwebtoken');
@@ -46,7 +58,7 @@ module.exports = {
 
             // if there is no token
             // return an error
-            return res.status(403).send({
+            return res.status(403).json({
                 success: false,
                 data: 'No token provided.'
             });

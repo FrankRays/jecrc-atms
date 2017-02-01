@@ -22,5 +22,6 @@
  */
 
 module.exports = {
-    '*' : 'Auth'
+    '*': 'Auth',
+    'POST /api/create-user': "Permission"
 };
