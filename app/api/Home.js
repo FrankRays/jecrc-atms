@@ -95,14 +95,57 @@ module.exports = {
         }
     },
     login: (req, res) => {
-        let username = req.body.username,
-            password = req.body.password;
-        let token = jwt.sign({
-            type: "admin"
-        }, locals.jwt.secret);
-        res.json({
-            success: true,
-            data: token
-        });
+
+        let whiteSpaces = /^\s*$/,
+            email = req.body.email || "",
+            password = req.body.password || "";
+        console.log(email, password);
+        if (email.match(whiteSpaces) ||
+            password.match(whiteSpaces)) {
+
+            res.json({
+                success: false,
+                data: "Invalid input"
+            });
+
+        } else {
+            password = crypto.createHash('md5').update(password).digest("hex");
+            server.pool.getConnection((err, connection) => {
+                let query = "SELECT * FROM user WHERE email=? AND password=?";
+
+                connection.query(query, [
+                    email,
+                    password
+                ], (error, results, fields) => {
+
+                    if (error) {
+
+                        console.error(error);
+                        res.json({
+                            success: false,
+                            data: "Something went wrong!"
+                        });
+
+                    } else if (results.length) {
+
+                        let token = jwt.sign({
+                            email: results[0].email,
+                            type: results[0].type
+                        }, locals.jwt.secret);
+
+                        res.json({
+                            success: true,
+                            data: token
+                        });
+
+                    } else {
+                        res.json({
+                            success: false,
+                            data: "Wrong credentials!"
+                        });
+                    }
+                });
+            });
+        }
     }
 };

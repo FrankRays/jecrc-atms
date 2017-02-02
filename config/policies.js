@@ -19,7 +19,7 @@
  *
  * here METHOD will be: {"GET", "POST", "PUT", "DELETE"}
  * and so on as mentioned in express.js documentation for routing methods.
- */
+*******************************************************************************/
 
 module.exports = {
     '*': 'Auth',

@@ -5,7 +5,7 @@
  * A middleware to check whether client is authorized to take the action
  * attached to the endpoint.
  *
- */
+ ******************************************************************************/
 
 "use strict";
 

@@ -22,7 +22,7 @@
  *     "GET /home/books": "Home.index"
  * }
  * above will be converted to url: /api/home/books
- */
+ ******************************************************************************/
 
 module.exports = {
     api: {

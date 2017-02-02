@@ -8,7 +8,7 @@
  * This policy apply to all endpoints for exceptions, add the url to
  * "nonProtected" array object.
  *
- */
+ ******************************************************************************/
 
 "use strict";
 
