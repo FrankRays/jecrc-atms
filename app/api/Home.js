@@ -7,22 +7,34 @@ const crypto = require('crypto');
 
 module.exports = {
     index: (req, res) => {
+
         res.json({
             success: true,
-            data: "Welcome"
+            data: {
+                message: "Welcome"
+            }
         });
+
     },
     error_404: (req, res) => {
+
         res.status(404).json({
             success: false,
-            data: "Page not found"
+            data: {
+                message: "Page not found"
+            }
         });
+
     },
     error_500: (req, res) => {
+
         res.status(500).json({
             success: false,
-            data: "Internal server error"
+            data: {
+                message: "Internal server error"
+            }
         });
+
     },
     signup: (req, res) => {
 
@@ -37,13 +49,16 @@ module.exports = {
 
             res.json({
                 success: false,
-                data: "Invalid input"
+                data: {
+                    message: "Invalid input"
+                }
             });
 
         } else {
 
             password = crypto.createHash('md5').update(password).digest("hex");
             server.pool.getConnection((err, connection) => {
+
                 let query = "SELECT * FROM user WHERE ?";
 
                 connection.query(query, {
@@ -55,14 +70,18 @@ module.exports = {
                         console.error(error);
                         res.json({
                             success: false,
-                            data: "Something went wrong!"
+                            data: {
+                                message: "Something went wrong!"
+                            }
                         });
 
                     } else if (results.length) {
 
                         res.json({
                             success: false,
-                            data: "User with this email exists!"
+                            data: {
+                                message: "User with this email exists!"
+                            }
                         });
 
                     } else {
@@ -75,40 +94,59 @@ module.exports = {
                             type,
                             new Date()
                         ], (err, results, fields) => {
+
                             connection.release();
+
                             if (err) {
+
                                 console.error(err);
                                 res.json({
                                     success: false,
-                                    data: "Something went wrong!"
+                                    data: {
+                                        message: "Something went wrong!"
+                                    }
                                 });
+
                             } else {
+
                                 res.json({
                                     success: true,
-                                    data: "User created."
+                                    data: {
+                                        message: "User created."
+                                    }
                                 });
+
                             }
+
                         });
+
                     }
+
                 });
+
             });
+
         }
+
     },
     login: (req, res) => {
 
         let whiteSpaces = /^\s*$/,
             email = req.body.email || "",
             password = req.body.password || "";
-        console.log(email, password);
+
         if (email.match(whiteSpaces) ||
             password.match(whiteSpaces)) {
 
             res.json({
                 success: false,
-                data: "Invalid input"
+                data: {
+                    message: "Invalid input"
+                }
             });
 
         } else {
+
             password = crypto.createHash('md5').update(password).digest("hex");
             server.pool.getConnection((err, connection) => {
                 let query = "SELECT * FROM user WHERE email=? AND password=?";
@@ -123,7 +161,9 @@ module.exports = {
                         console.error(error);
                         res.json({
                             success: false,
-                            data: "Something went wrong!"
+                            data: {
+                                message: "Something went wrong!"
+                            }
                         });
 
                     } else if (results.length) {
@@ -135,17 +175,28 @@ module.exports = {
 
                         res.json({
                             success: true,
-                            data: token
+                            data: {
+                                message: "Successfully logged in.",
+                                token: token
+                            }
                         });
 
                     } else {
+
                         res.json({
                             success: false,
-                            data: "Wrong credentials!"
+                            data: {
+                                message: "Wrong credentials!"
+                            }
                         });
+
                     }
+
                 });
+
             });
+
         }
+
     }
 };

@@ -14,20 +14,36 @@
     <link href="/theme/css/bootstrap-reset.css" rel="stylesheet">
     <link href="/theme/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
+    <!-- NProgress -->
+    <link href="/theme/js/nprogress/nprogress.css" rel="stylesheet" />
+	<script src="/theme/js/nprogress/nprogress.js"></script>
+	<script src="/theme/js/nprogress/loader.js"></script>
+
+    <!-- PNotify -->
+	<link href="/theme/js/pnotify/dist/pnotify.css" rel="stylesheet">
+	<link href="/theme/js/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+	<link href="/theme/js/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- Theme styles -->
     <link href="/theme/css/style.css" rel="stylesheet">
     <link href="/theme/css/style-responsive.css" rel="stylesheet" />
 </head>
 
 <body class="login-body">
 
+    <script type="text/javascript">
+        // start loader
+        document.dispatchEvent(new CustomEvent('loadingStart'));
+    </script>
+
     <div class="container">
 
-        <form class="form-signin" action="">
+        <form class="form-signin">
             <h2 class="form-signin-heading">sign in now</h2>
             <div class="login-wrap">
                 <div class="user-login-info">
-                    <input type="text" class="form-control" placeholder="User ID" autofocus>
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="text" class="form-control" id="username" placeholder="User ID" autofocus>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
                 </div>
                 <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
@@ -72,7 +88,12 @@
     <!--Core js-->
     <script src="/theme/js/jquery.js"></script>
     <script src="/theme/bs3/js/bootstrap.min.js"></script>
-
+    <!-- PNotify -->
+    <script src="/theme/js/pnotify/dist/pnotify.js"></script>
+    <script src="/theme/js/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/theme/js/pnotify/dist/pnotify.nonblock.js"></script>
+    <!-- Page specific scripts -->
+    <script src="/js/login.js" charset="utf-8"></script>
 </body>
 
 </html>
