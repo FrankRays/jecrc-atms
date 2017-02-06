@@ -181,7 +181,7 @@ module.exports = {
                         let token = jwt.sign({
                             email: results[0].email,
                             type: results[0].type,
-                            athenticated: true
+                            isAuthenticated: true
                         }, locals.jwt.secret);
 
                         res.json({

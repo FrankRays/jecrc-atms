@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 
+const session = require('express-session');
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -35,6 +36,13 @@ app.set('view engine', '.hbs');
 
 // public files
 app.use(express.static('public'));
+
+// session
+app.use(session({
+    secret: config.locals.sessionSecret,
+    resave: true,
+    saveUninitialized: true
+}));
 
 // to support JSON-encoded bodies
 app.use(bodyParser.json());

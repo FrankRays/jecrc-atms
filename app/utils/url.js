@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = {
-    isWeb: (url) => {
+    forWeb: (url) => {
         return url.match(/^\/web\//);
     }
 };
