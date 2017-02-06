@@ -16,6 +16,16 @@ module.exports = {
         });
 
     },
+    error_403: (req, res) => {
+
+        res.status(403).json({
+            success: false,
+            data: {
+                message: "Access Denied!"
+            }
+        });
+
+    },
     error_404: (req, res) => {
 
         res.status(404).json({
@@ -170,7 +180,8 @@ module.exports = {
 
                         let token = jwt.sign({
                             email: results[0].email,
-                            type: results[0].type
+                            type: results[0].type,
+                            athenticated: true
                         }, locals.jwt.secret);
 
                         res.json({

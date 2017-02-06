@@ -28,6 +28,7 @@ module.exports = {
     api: {
         // all api routes
         "GET /": "Home.index",
+        "GET /403": "Home.error_403",
         "GET /404": "Home.error_404",
         "GET /500": "Home.error_500",
         "POST /login": "Home.login",
@@ -36,6 +37,7 @@ module.exports = {
     web: {
         // all website routes
         "GET /": "Home.index",
+        "GET /403": "Home.error_403",
         "GET /404": "Home.error_404",
         "GET /500": "Home.error_500",
         "GET /login-page": "Home.login_page",

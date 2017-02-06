@@ -13,17 +13,20 @@
 "use strict";
 
 const jwt = require('jsonwebtoken');
+const device = require('../utils/device.js');
 const locals = require('../../config/locals.js');
 
 let nonProtected = [
     "/",
 
     "/web/",
+    "/web/403",
     "/web/404",
     "/web/500",
     "/web/login-page",
 
     "/api/",
+    "/api/403",
     "/api/404",
     "/api/500",
     "/api/login",
@@ -58,10 +61,11 @@ module.exports = {
 
             // if there is no token
             // return an error
-            return res.status(403).json({
-                success: false,
-                data: 'No token provided.'
-            });
+            if (device.isWeb(req.path)) {
+                res.redirect('/web/403');
+            } else {
+                return res.redirect('/api/403');
+            }
 
         }
     }
