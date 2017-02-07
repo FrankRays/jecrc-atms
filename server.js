@@ -15,10 +15,12 @@ const config = {
 };
 
 const server = app.listen(config.locals.port, () => {
-    console.log("Server started!! Please visit:",
+    console.log(
+        "Server started!! Please visit:",
         '\x1b[36m',
         "http://localhost:" + config.locals.port,
-        '\x1b[0m');
+        '\x1b[0m'
+    );
 });
 
 const pool = mysql.createPool(config.locals.mysql);
@@ -52,28 +54,58 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// policies
+// register policies
+let registerPolicies = (policyName, method, endpoint) => {
+
+    if (policyName instanceof Array) {
+
+        for (var i = 0; i < policyName.length; i++) {
+
+            let policy = require('./app/policies/' + policyName[i] + '.js');
+            app[method](endpoint, policy.index);
+
+        }
+
+    } else {
+
+        let policy = require('./app/policies/' + policyName + '.js');
+        app[method](endpoint, policy.index);
+
+    }
+
+}
+
+// register endpoint specific polcies
 let addPolicy = (endpoint, method) => {
     if (config.policies.hasOwnProperty(method.toUpperCase() + ' ' + endpoint)) {
-        let policy = require('./app/policies/' +
-            config.policies[method.toUpperCase() + ' ' + endpoint] + '.js');
-        app[method](endpoint, policy.index);
+
+        let policyName = config.policies[method.toUpperCase() + ' ' + endpoint];
+        registerPolicies(policyName, method, endpoint);
+
     }
 };
 
+// register app specific policies
 if (config.policies.hasOwnProperty('*')) {
+
     try {
-        let policy = require('./app/policies/' + config.policies['*'] + '.js');
-        app.use(policy.index);
+
+        let policyName = config.policies['*'];
+        registerPolicies(policyName, 'use', '*');
+
     } catch (e) {
         console.error(e);
     }
+
 }
 
 // register endpoints for api
 let registerEndpoints = (option) => {
+
     for (let key in config.routes[option]) {
+
         if (config.routes[option].hasOwnProperty(key)) {
+
             let controllerName = config.routes[option][key]
                 .substr(0, config.routes[option][key].indexOf('.')),
 
@@ -84,17 +116,23 @@ let registerEndpoints = (option) => {
                 route = key.substr(key.indexOf(' ') + 1);
 
             try {
+
                 let controller = require('./app/' +
                     option + '/' + controllerName + '.js');
 
                 addPolicy('/' + option + route, method);
                 app[method]('/' + option + route, controller[callback]);
+
             } catch (e) {
                 console.error(e);
             }
+
         }
+
     }
+
 }
+
 registerEndpoints('api');
 registerEndpoints('web');
 
