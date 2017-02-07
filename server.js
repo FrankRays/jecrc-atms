@@ -14,6 +14,8 @@ const config = {
     policies: require('./config/policies.js')
 };
 
+const url = require('./app/utils/Url.js');
+
 const server = app.listen(config.locals.port, () => {
     console.log(
         "Server started!! Please visit:",
@@ -66,6 +68,22 @@ let registerPolicies = (policyName, method, endpoint) => {
 
         }
 
+    } else if (policyName === true) {
+
+        app[method](endpoint, (req, res, next) => next());
+
+    } else if (policyName === false) {
+
+        app[method](endpoint, (req, res, next) => {
+
+            if (url.forWeb(endpoint)) {
+                res.redirect('/web/403');
+            } else {
+                res.redirect('/api/403');
+            }
+
+        });
+
     } else {
 
         let policy = require('./app/policies/' + policyName + '.js');
@@ -75,31 +93,36 @@ let registerPolicies = (policyName, method, endpoint) => {
 
 }
 
-// register endpoint specific polcies
-let addPolicy = (endpoint, method) => {
-    if (config.policies.hasOwnProperty(method.toUpperCase() + ' ' + endpoint)) {
+let addPolicy = (option, endpoint, method, controller, handler) => {
 
-        let policyName = config.policies[method.toUpperCase() + ' ' + endpoint];
+    if (config.policies[option].hasOwnProperty(controller)) {
+
+        if (config.policies[option][controller].hasOwnProperty(handler)) {
+
+            let policyName = config.policies[option][controller][handler];
+            registerPolicies(policyName, method, endpoint);
+
+        } else if ((config.policies[option][controller] instanceof Array) ||
+            !(config.policies[option][controller] instanceof Object)) {
+
+            let policyName = config.policies[option][controller];
+            registerPolicies(policyName, method, endpoint);
+
+        } else if (config.policies[option][controller].hasOwnProperty("*")) {
+
+            let policyName = config.policies[option][controller]["*"];
+            registerPolicies(policyName, method, endpoint);
+
+        }
+
+    } else if (config.policies[option].hasOwnProperty("*")) {
+
+        let policyName = config.policies[option]["*"];
         registerPolicies(policyName, method, endpoint);
 
     }
+
 };
-
-// TODO: make policies controller handler specific
-
-// register app specific policies
-if (config.policies.hasOwnProperty('*')) {
-
-    try {
-
-        let policyName = config.policies['*'];
-        registerPolicies(policyName, 'use', '*');
-
-    } catch (e) {
-        console.error(e);
-    }
-
-}
 
 // register endpoints for api
 let registerEndpoints = (option) => {
@@ -111,7 +134,7 @@ let registerEndpoints = (option) => {
             let controllerName = config.routes[option][key]
                 .substr(0, config.routes[option][key].indexOf('.')),
 
-                callback = config.routes[option][key]
+                handler = config.routes[option][key]
                 .substr(config.routes[option][key].indexOf('.') + 1),
 
                 method = key.substr(0, key.indexOf(' ')).toLowerCase(),
@@ -120,10 +143,11 @@ let registerEndpoints = (option) => {
             try {
 
                 let controller = require('./app/' +
-                    option + '/' + controllerName + '.js');
+                        option + '/' + controllerName + '.js'),
+                    endpoint = '/' + option + route;
 
-                addPolicy('/' + option + route, method);
-                app[method]('/' + option + route, controller[callback]);
+                addPolicy(option, endpoint, method, controllerName, handler);
+                app[method](endpoint, controller[handler]);
 
             } catch (e) {
                 console.error(e);
