@@ -85,6 +85,8 @@ let addPolicy = (endpoint, method) => {
     }
 };
 
+// TODO: make policies controller handler specific
+
 // register app specific policies
 if (config.policies.hasOwnProperty('*')) {
 

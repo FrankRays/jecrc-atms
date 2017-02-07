@@ -180,9 +180,10 @@ module.exports = {
 
                         let token = jwt.sign({
                             email: results[0].email,
-                            type: results[0].type,
-                            isAuthenticated: true
+                            type: results[0].type
                         }, locals.jwt.secret);
+
+                        res.cookie('x-access-token', token);
 
                         res.json({
                             success: true,
