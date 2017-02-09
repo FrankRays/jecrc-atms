@@ -12,7 +12,13 @@ module.exports = {
         res.status(500).render('500.hbs');
     },
     login_page: (req, res) => {
-        res.render('login.hbs');
+
+        if (req.session.authenticated) {
+            res.redirect('/web/dashboard');
+        } else {
+            res.render('login.hbs');
+        }
+
     },
     dashboard: (req, res) => {
         res.send("Welcome dashboard");

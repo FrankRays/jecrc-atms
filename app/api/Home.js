@@ -184,6 +184,7 @@ module.exports = {
                         }, locals.jwt.secret);
 
                         res.cookie('x-access-token', token);
+                        req.session.authenticated = true;
 
                         res.json({
                             success: true,
@@ -209,6 +210,22 @@ module.exports = {
             });
 
         }
+
+    },
+    logout: (req, res) => {
+
+        req.session.destroy(function(err) {
+
+            res.clearCookie("x-access-token");
+
+            res.json({
+                success: true,
+                data: {
+                    message: "Successfully logged out."
+                }
+            });
+            
+        })
 
     }
 };

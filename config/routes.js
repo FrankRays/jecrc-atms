@@ -32,6 +32,7 @@ module.exports = {
         "GET /404": "Home.error_404",
         "GET /500": "Home.error_500",
         "POST /login": "Home.login",
+        "GET /logout": "Home.logout",
         "POST /create-user": "Home.signup"
     },
     web: {

@@ -17,7 +17,10 @@ module.exports = {
     index: (req, res, next) => {
 
         // check header or url parameters or post parameters for token
-        let token = req.body.token || req.query.token || req.headers['x-access-token'];
+        let token = req.body.token ||
+            req.query.token ||
+            req.headers['x-access-token'] ||
+            req.cookies['x-access-token'];
 
         if (token) {
 
@@ -40,7 +43,7 @@ module.exports = {
             // if there is no token
             // return an error
             if (url.forWeb(req.path)) {
-                res.redirect('/web/403');
+                res.redirect('/web/login-page');
             } else {
                 return res.redirect('/api/403');
             }

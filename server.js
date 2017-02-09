@@ -6,6 +6,7 @@ const app = express();
 const session = require('express-session');
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
 
 const config = {
@@ -47,6 +48,9 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+// cookie-parser
+app.use(cookieParser());
 
 // to support JSON-encoded bodies
 app.use(bodyParser.json());

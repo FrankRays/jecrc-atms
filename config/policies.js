@@ -62,6 +62,7 @@ module.exports = {
             "error_404": true,
             "error_500": true,
             "login": true,
+            "logout": true,
             "signup": "Permission"
         }
     },
