@@ -1,26 +1,46 @@
 module.exports = {
     index: (req, res) => {
-        res.render('index.hbs');
+        res.render('index.hbs', {
+            layout: false
+        });
     },
     error_403: (req, res) => {
-        res.status(403).render('403.hbs');
+        res.status(403).render('403.hbs', {
+            layout: false
+        });
     },
     error_404: (req, res) => {
-        res.status(404).render('404.hbs');
+        res.status(404).render('404.hbs', {
+            layout: false
+        });
     },
     error_500: (req, res) => {
-        res.status(500).render('500.hbs');
+        res.status(500).render('500.hbs', {
+            layout: false
+        });
     },
     login_page: (req, res) => {
 
         if (req.session.authenticated) {
             res.redirect('/web/dashboard');
         } else {
-            res.render('login.hbs');
+            res.render('login.hbs', {
+                layout: false
+            });
         }
 
     },
+    logout: (req, res) => {
+
+        req.session.destroy(function(err) {
+
+            res.clearCookie("x-access-token");
+            res.redirect('/web/login-page');
+
+        })
+
+    },
     dashboard: (req, res) => {
-        res.send("Welcome dashboard");
+        res.render("dashboard");
     }
 };

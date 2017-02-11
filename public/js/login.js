@@ -27,7 +27,7 @@ $(document).ready(function() {
                 title = "Success";
                 type = "success";
                 token = response.data.token;
-                console.log(token);
+                location.reload();
 
             } else {
 

@@ -42,6 +42,7 @@ module.exports = {
         "GET /404": "Home.error_404",
         "GET /500": "Home.error_500",
         "GET /login-page": "Home.login_page",
+        "GET /logout": "Home.logout",
         "GET /dashboard": "Home.dashboard"
     }
 };

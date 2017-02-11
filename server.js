@@ -35,7 +35,8 @@ module.exports = {
 
 // setup view engine
 app.engine('.hbs', hbs({
-    extname: '.hbs'
+    extname: '.hbs',
+    defaultLayout: 'main'
 }));
 app.set('view engine', '.hbs');
 

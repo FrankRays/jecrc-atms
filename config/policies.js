@@ -73,7 +73,8 @@ module.exports = {
             "error_403": true,
             "error_404": true,
             "error_500": true,
-            "login_page": true
+            "login_page": true,
+            "logout": true
         }
     }
 };
