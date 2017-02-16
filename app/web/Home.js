@@ -40,7 +40,20 @@ module.exports = {
         })
 
     },
+    signup: (req, res) => {
+
+        res.render("signup", {
+            session: req.session,
+            jwt: req.jwtDecoded
+        });
+
+    },
     dashboard: (req, res) => {
-        res.render("dashboard");
+
+        res.render("dashboard", {
+            session: req.session,
+            jwt: req.jwtDecoded
+        });
+
     }
 };

@@ -11,15 +11,21 @@
 
 module.exports = {
     index: (req, res, next) => {
+
         let userType = req.jwtDecoded.type;
 
-        if (userType == "admin") {
+        if (userType == "admin" || userType == "coordinator") {
+
             next();
+
         } else {
+
             res.status(403).json({
                 success: false,
                 data: "Access denied."
             });
+
         }
+
     }
 };

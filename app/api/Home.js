@@ -180,6 +180,8 @@ module.exports = {
 
                         let token = jwt.sign({
                             email: results[0].email,
+                            name: results[0].name,
+                            mobile: results[0].mobile,
                             type: results[0].type
                         }, locals.jwt.secret);
 
@@ -224,7 +226,7 @@ module.exports = {
                     message: "Successfully logged out."
                 }
             });
-            
+
         })
 
     }

@@ -43,6 +43,7 @@ module.exports = {
         "GET /500": "Home.error_500",
         "GET /login-page": "Home.login_page",
         "GET /logout": "Home.logout",
-        "GET /dashboard": "Home.dashboard"
+        "GET /dashboard": "Home.dashboard",
+        "GET /create-user": "Home.signup"
     }
 };

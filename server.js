@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 
 const session = require('express-session');
-const hbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
@@ -12,7 +12,8 @@ const mysql = require('mysql');
 const config = {
     locals: require('./config/locals.js'),
     routes: require('./config/routes.js'),
-    policies: require('./config/policies.js')
+    policies: require('./config/policies.js'),
+    helpers: require('./config/helpers.js')
 };
 
 const url = require('./app/utils/Url.js');
@@ -34,11 +35,21 @@ module.exports = {
 };
 
 // setup view engine
-app.engine('.hbs', hbs({
+var hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'main'
-}));
+});
+app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
+
+// register helpers
+for (var helper in config.helpers) {
+
+    if (config.helpers.hasOwnProperty(helper)) {
+        hbs.handlebars.registerHelper(helper, config.helpers[helper]);
+    }
+
+}
 
 // public files
 app.use(express.static('public'));

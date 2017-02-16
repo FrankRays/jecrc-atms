@@ -19,7 +19,7 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <img alt="" src="/assets/user.png">
-                    <span class="username">John Doe</span>
+                    <span class="username">{{jwt.name}}</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu extended logout">
@@ -45,6 +45,14 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                {{#if (condition (condition jwt.type '==' "admin") '||' (condition jwt.type '==' "coordinator"))}}
+                    <li>
+                        <a href="/web/create-user">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Create User</span>
+                        </a>
+                    </li>
+                {{/if}}
             </ul>
         </div>
         <!-- sidebar menu end-->
