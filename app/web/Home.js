@@ -43,6 +43,7 @@ module.exports = {
     signup: (req, res) => {
 
         res.render("signup", {
+            title: "Signup",
             session: req.session,
             jwt: req.jwtDecoded
         });
@@ -51,6 +52,7 @@ module.exports = {
     dashboard: (req, res) => {
 
         res.render("dashboard", {
+            title: "Dashboard",
             session: req.session,
             jwt: req.jwtDecoded
         });

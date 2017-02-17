@@ -63,7 +63,7 @@ module.exports = {
             "error_500": true,
             "login": true,
             "logout": true,
-            "signup": "Permission"
+            "signup": ["Auth", "Permission"]
         }
     },
     "web": {

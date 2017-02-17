@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-    var token;
-
     // stop loader
     document.dispatchEvent(new CustomEvent('loadingComplete'));
 
@@ -26,7 +24,6 @@ $(document).ready(function() {
 
                 title = "Success";
                 type = "success";
-                token = response.data.token;
                 location.reload();
 
             } else {

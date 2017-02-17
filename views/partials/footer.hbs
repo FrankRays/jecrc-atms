@@ -11,5 +11,13 @@
 <script src="/theme/js/pnotify/dist/pnotify.js"></script>
 <script src="/theme/js/pnotify/dist/pnotify.buttons.js"></script>
 <script src="/theme/js/pnotify/dist/pnotify.nonblock.js"></script>
-<!--common script init for all pages-->
+{{#if (condition title "==" "Signup")}}
+<!-- jquery validator -->
+<script src="/theme/js/jquery.validate.min.js" charset="utf-8"></script>
+{{/if}}
+<!-- common script init for all pages -->
 <script src="/js/scripts.js"></script>
+<!-- Page specific scripts -->
+{{#if (condition title "==" "Signup")}}
+<script src="/js/signup.js" charset="utf-8"></script>
+{{/if}}

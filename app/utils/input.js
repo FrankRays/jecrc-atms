@@ -47,7 +47,7 @@ module.exports = {
                         }
                         break;
                     case "isMobilePhone":
-                        if (!validator.isMobilePhone(data[input])) {
+                        if (!validator.isMobilePhone(data[input], "en-IN")) {
                             return input;
                         }
                         break;

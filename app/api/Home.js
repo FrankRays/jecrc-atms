@@ -51,7 +51,7 @@ module.exports = {
     signup: (req, res) => {
 
         let isValid = input.validate(req.body, {
-            name: "isAlpha",
+            name: "isNotEmpty",
             mobile: "isMobilePhone",
             email: "isEmail",
             password: "isNotEmpty",
