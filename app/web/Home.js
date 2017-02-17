@@ -49,6 +49,15 @@ module.exports = {
         });
 
     },
+    profile: (req, res) => {
+
+        res.render("profile", {
+            title: "Profile",
+            session: req.session,
+            jwt: req.jwtDecoded
+        });
+
+    },
     dashboard: (req, res) => {
 
         res.render("dashboard", {

@@ -44,6 +44,7 @@ module.exports = {
         "GET /login-page": "Home.login_page",
         "GET /logout": "Home.logout",
         "GET /dashboard": "Home.dashboard",
-        "GET /create-user": "Home.signup"
+        "GET /create-user": "Home.signup",
+        "GET /profile": "Home.profile"
     }
 };
