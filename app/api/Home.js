@@ -1,9 +1,11 @@
 "use strict";
 
-const server = require('../../server.js');
 const jwt = require('jsonwebtoken');
-const locals = require('../../config/locals.js');
 const crypto = require('crypto');
+
+const server = require('../../server.js');
+const locals = require('../../config/locals.js');
+const input = require('../utils/input.js');
 
 module.exports = {
     index: (req, res) => {
@@ -48,31 +50,32 @@ module.exports = {
     },
     signup: (req, res) => {
 
-        let whiteSpaces = /^\s*$/,
-            email = req.body.email,
-            password = req.body.password,
-            type = req.body.type;
+        let isValid = input.validate(req.body, {
+            name: "isAlpha",
+            mobile: "isMobilePhone",
+            email: "isEmail",
+            password: "isNotEmpty",
+            type: "isAlpha"
+        });
 
-        if (email.match(whiteSpaces) ||
-            password.match(whiteSpaces) ||
-            type.match(whiteSpaces)) {
+        if (isValid !== true) {
 
             res.json({
                 success: false,
                 data: {
-                    message: "Invalid input"
+                    message: "Invalid input: \"" + isValid + "\"."
                 }
             });
 
         } else {
 
-            password = crypto.createHash('md5').update(password).digest("hex");
+            req.body.password = crypto.createHash('md5').update(req.body.password).digest("hex");
             server.pool.getConnection((err, connection) => {
 
                 let query = "SELECT * FROM user WHERE ?";
 
                 connection.query(query, {
-                    email: email
+                    email: req.body.email
                 }, (error, results, fields) => {
 
                     if (error) {
@@ -97,11 +100,13 @@ module.exports = {
                     } else {
 
                         connection.query("INSERT INTO user \
-                            (email, password, type, createdAt) \
-                            VALUES(?, ?, ?, ?)", [
-                            email,
-                            password,
-                            type,
+                            (name, mobile, email, password, type, createdAt) \
+                            VALUES(?, ?, ?, ?, ?, ?)", [
+                            req.body.name,
+                            req.body.mobile,
+                            req.body.email,
+                            req.body.password,
+                            req.body.type,
                             new Date()
                         ], (err, results, fields) => {
 
@@ -141,29 +146,29 @@ module.exports = {
     },
     login: (req, res) => {
 
-        let whiteSpaces = /^\s*$/,
-            email = req.body.email || "",
-            password = req.body.password || "";
+        let isValid = input.validate(req.body, {
+            email: "isNotEmpty",
+            password: "isNotEmpty"
+        });
 
-        if (email.match(whiteSpaces) ||
-            password.match(whiteSpaces)) {
+        if (isValid !== true) {
 
             res.json({
                 success: false,
                 data: {
-                    message: "Invalid input"
+                    message: "Invalid input: \"" + isValid + "\"."
                 }
             });
 
         } else {
 
-            password = crypto.createHash('md5').update(password).digest("hex");
+            req.body.password = crypto.createHash('md5').update(req.body.password).digest("hex");
             server.pool.getConnection((err, connection) => {
                 let query = "SELECT * FROM user WHERE email=? AND password=?";
 
                 connection.query(query, [
-                    email,
-                    password
+                    req.body.email,
+                    req.body.password
                 ], (error, results, fields) => {
 
                     if (error) {
