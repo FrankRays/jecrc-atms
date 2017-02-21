@@ -1,23 +1,32 @@
 module.exports = {
     index: (req, res) => {
-        res.render('index.hbs', {
-            layout: false
-        });
+
+        res.redirect('/web/login-page');
+        // res.render('index.hbs', {
+        //     layout: false
+        // });
+
     },
     error_403: (req, res) => {
+
         res.status(403).render('403.hbs', {
             layout: false
         });
+
     },
     error_404: (req, res) => {
+
         res.status(404).render('404.hbs', {
             layout: false
         });
+
     },
     error_500: (req, res) => {
+
         res.status(500).render('500.hbs', {
             layout: false
         });
+
     },
     login_page: (req, res) => {
 
