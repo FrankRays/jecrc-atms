@@ -5,7 +5,9 @@ const crypto = require('crypto');
 
 const server = require('../../server.js');
 const locals = require('../../config/locals.js');
-const input = require('../utils/input.js');
+
+const input = require('../utils/Input.js');
+const ApiData = require('../utils/ApiData.js');
 
 module.exports = {
     index: (req, res) => {
@@ -144,6 +146,34 @@ module.exports = {
         }
 
     },
+    profile: (req, res) => {
+
+        ApiData.profile(req.jwtDecoded.userId, (err, results) => {
+
+            if (err) {
+
+                console.error(err);
+                res.json({
+                    success: false,
+                    data: {
+                        message: "Error in fetching profile data"
+                    }
+                });
+
+            } else {
+
+                res.json({
+                    success: true,
+                    data: {
+                        profileData: results[0]
+                    }
+                });
+
+            }
+
+        });
+
+    },
     login: (req, res) => {
 
         let isValid = input.validate(req.body, {
@@ -184,6 +214,7 @@ module.exports = {
                     } else if (results.length) {
 
                         let token = jwt.sign({
+                            userId: results[0].id,
                             email: results[0].email,
                             name: results[0].name,
                             mobile: results[0].mobile,

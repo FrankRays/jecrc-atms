@@ -24,6 +24,8 @@
  * above will be converted to url: /api/home/books
  ******************************************************************************/
 
+"use strict";
+
 module.exports = {
     api: {
         // all api routes
@@ -33,7 +35,8 @@ module.exports = {
         "GET /500": "Home.error_500",
         "POST /login": "Home.login",
         "POST /logout": "Home.logout",
-        "POST /create-user": "Home.signup"
+        "POST /create-user": "Home.signup",
+        "GET /profile": "Home.profile"
     },
     web: {
         // all website routes

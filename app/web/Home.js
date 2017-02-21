@@ -1,3 +1,7 @@
+"use strict";
+
+const ApiData = require('../utils/ApiData.js');
+
 module.exports = {
     index: (req, res) => {
 
@@ -60,10 +64,27 @@ module.exports = {
     },
     profile: (req, res) => {
 
-        res.render("profile", {
-            title: "Profile",
-            session: req.session,
-            jwt: req.jwtDecoded
+        ApiData.profile(req.jwtDecoded.userId, (err, results) => {
+
+            let resData = {
+                title: "Profile",
+                session: req.session,
+                jwt: req.jwtDecoded
+            };
+
+            if (err) {
+
+                console.error(err);
+                resData.error = "Error in fetching profile data.";
+
+            } else {
+
+                resData.profileData = results[0];
+
+            }
+
+            res.render("profile", resData);
+
         });
 
     },

@@ -53,4 +53,7 @@ jspm_packages
 # Config locals
 config/locals.js
 
+# Profile pictures
+public/assets/profile
+
 # End of https://www.gitignore.io/api/node
